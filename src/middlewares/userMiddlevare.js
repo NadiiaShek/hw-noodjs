@@ -5,8 +5,8 @@ const jwt = require("jsonwebtoken");
 const auth = async (req, res, next) => {
   const [tokenType, token] = req.headers.authorization.split(" ");
   console.log(tokenType);
-  if (!token) {
-    next(new NotAuthorizedError("Give me a token, mazafaka!!!"));
+  if (!token || tokenType !== "Bearer") {
+    next(new NotAuthorizedError("Give me a Bearer token!!!"));
   }
   try {
     const userDecode = jwt.decode(token, process.env.JWT_SECRET);
